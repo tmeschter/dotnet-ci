@@ -34,7 +34,7 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "labVirtualNetworkId": "[resourceId('Microsoft.DevTestLab/labs/virtualnetworks', parameters('labName'), 'imagefactory-corp-wus2-vnet-1')]",
-        "notes": "W10T-x64",
+        "notes": "W10T-x64-clean",
         "customImageId": "/subscriptions/6fd2cc40-ad0c-4f8f-a1c4-9ab4e656c849/resourcegroups/dditimagefactoryrg886736/providers/microsoft.devtestlab/labs/dditimagefactory/customimages/w10t-x64-clean",
         "size": "[parameters('size')]",
         "userName": "[parameters('userName')]",
