@@ -1,0 +1,111 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newVMName": {
+      "type": "string",
+      "defaultValue": "WillowProd"
+    },
+    "labName": {
+      "type": "string",
+      "defaultValue": "DDITImageFactory"
+    },
+    "size": {
+      "type": "string",
+      "defaultValue": "Standard_F16s"
+    },
+    "userName": {
+      "type": "string",
+      "defaultValue": "vmadmin"
+    },
+    "password": {
+      "type": "securestring"
+    },
+    "Release_Visual_Studio_Willow_BootStrapper_(Read_WorkLoads_Description).WorkLoads": {
+      "type": "string",
+      "defaultValue": "all"
+    },
+    "Release_Visual_Studio_Willow_BootStrapper_(Read_WorkLoads_Description).CustomWorkloads": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "Sku": {
+      "type": "string",
+      "defaultValue": "Community"
+    }
+  },
+  "variables": {
+    "labSubnetName": "CorpNet",
+    "labVirtualNetworkId": "[resourceId('Microsoft.DevTestLab/labs/virtualnetworks', parameters('labName'), variables('labVirtualNetworkName'))]",
+    "labVirtualNetworkName": "ImageFactory-CORP-WUS2-VNET-1",
+    "vmId": "[resourceId ('Microsoft.DevTestLab/labs/virtualmachines', parameters('labName'), parameters('newVMName'))]",
+    "vmName": "[concat(parameters('labName'), '/', parameters('newVMName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-05-15",
+      "type": "Microsoft.DevTestLab/labs/virtualmachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "labVirtualNetworkId": "[variables('labVirtualNetworkId')]",
+        "notes": "Windows Server 2012 R2 Datacenter",
+        "galleryImageReference": {
+          "offer": "WindowsServer",
+          "publisher": "MicrosoftWindowsServer",
+          "sku": "2012-R2-Datacenter",
+          "osType": "Windows",
+          "version": "latest"
+        },
+          "size": "[parameters('size')]",
+          "userName": "[parameters('userName')]",
+          "password": "[parameters('password')]",
+          "isAuthenticationWithSshKey": false,
+        "artifacts": [
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-install-oneget')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-vs-willowreleased')]",
+            "parameters": [
+              {
+                "name": "WorkLoads",
+                "value": "[parameters('Release_Visual_Studio_Willow_BootStrapper_(Read_WorkLoads_Description).WorkLoads')]"
+              },
+              {
+                "name": "CustomWorkloads",
+                "value": "[parameters('Release_Visual_Studio_Willow_BootStrapper_(Read_WorkLoads_Description).CustomWorkloads')]"
+              },
+              {
+                "name": "Sku",
+                "value": "[parameters('Sku')]"
+              }
+            ]
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-task-wait')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-restart')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-add-trusted-sites')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-enableadminaftersysprep')]"
+          }
+        ],
+          "labSubnetName": "[variables('labSubnetName')]",
+          "disallowPublicIpAddress": true,
+          "storageType": "Premium",
+          "allowClaim": false
+        }
+      }
+  ],
+  "outputs": {
+    "labVMId": {
+      "type": "string",
+      "value": "[variables('vmId')]"
+    }
+  }
+}
