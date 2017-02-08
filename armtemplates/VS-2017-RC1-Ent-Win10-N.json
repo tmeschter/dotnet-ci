@@ -4,7 +4,7 @@
   "parameters": {
     "newVMName": {
       "type": "string",
-      "defaultValue": "WillowProd"
+      "defaultValue": "GitHubTest"
     },
     "labName": {
       "type": "string",
