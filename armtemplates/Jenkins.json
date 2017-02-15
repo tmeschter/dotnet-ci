@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newVMName": {
+      "type": "string",
+      "defaultValue": "JenkinsVM"
+    },
+    "labName": {
+      "type": "string",
+      "defaultValue": "DDITImageFactory"
+    },
+    "size": {
+      "type": "string",
+      "defaultValue": "Standard_DS1_v2"
+    },
+    "userName": {
+      "type": "string",
+      "defaultValue": "VMAdmin"
+    },
+    "password": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "labSubnetName": "CorpNet",
+    "labVirtualNetworkId": "[resourceId('Microsoft.DevTestLab/labs/virtualnetworks', parameters('labName'), variables('labVirtualNetworkName'))]",
+    "labVirtualNetworkName": "ImageFactory-CORP-WUS2-VNET-1",
+    "vmId": "[resourceId ('Microsoft.DevTestLab/labs/virtualmachines', parameters('labName'), parameters('newVMName'))]",
+    "vmName": "[concat(parameters('labName'), '/', parameters('newVMName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-05-15",
+      "type": "Microsoft.DevTestLab/labs/virtualmachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "labVirtualNetworkId": "[variables('labVirtualNetworkId')]",
+        "notes": "Windows-10-Enterprise-VS2015U3",
+        "customImageId": "/subscriptions/6fd2cc40-ad0c-4f8f-a1c4-9ab4e656c849/resourcegroups/dditimagefactoryrg886736/providers/microsoft.devtestlab/labs/dditimagefactory/customimages/windows-10-enterprise-vs2015u3",
+        "size": "[parameters('size')]",
+        "userName": "[parameters('userName')]",
+        "password": "[parameters('password')]",
+        "isAuthenticationWithSshKey": false,
+        "artifacts": [
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-cmake')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo393', 'Windows-JRE')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo393', 'Windows-Python27')]"
+          },
+          {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo393', 'windows-ImageFactorygit')]"
+          }
+		            {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo393', 'windows-unsetcredhelper')]"
+          }
+        ],
+        "labSubnetName": "[variables('labSubnetName')]",
+        "disallowPublicIpAddress": true,
+        "storageType": "Premium",
+        "allowClaim": false
+      }
+    }
+  ],
+  "outputs": {
+    "labVMId": {
+      "type": "string",
+      "value": "[variables('vmId')]"
+    }
+  }
+}
