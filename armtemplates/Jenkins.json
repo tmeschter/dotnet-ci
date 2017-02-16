@@ -57,6 +57,9 @@
             "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-ImageFactorygit')]"
           },
           {
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-restart')]"
+          },
+          {
             "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-unsetcredhelper')]"
           }
         ],
