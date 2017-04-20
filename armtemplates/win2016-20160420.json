@@ -8,7 +8,7 @@
     },
     "labName": {
       "type": "string",
-      "defaultValue": "DDJenkinsDTL"
+      "defaultValue": "DDITImageFactory"
     },
     "size": {
       "type": "string",
@@ -63,13 +63,13 @@
         "isAuthenticationWithSshKey": false,
         "artifacts": [
           {
-            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo719', 'windows-cmake')]"
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-cmake')]"
           },
           {
-            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo719', 'Windows-JRE')]"
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'Windows-JRE')]"
           },
           {
-            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo719', 'windows-vs-willowreleased')]",
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-vs-willowreleased')]",
             "parameters": [
               {
                 "name": "WorkLoads",
@@ -86,7 +86,7 @@
             ]
           },
           {
-            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo719', 'Windows-Python27')]"
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'Windows-Python27')]"
           },
           {
             "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'public repo', 'windows-notepadplusplus')]"
