@@ -63,7 +63,7 @@
             "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'Windows-JRE')]"
           },
           {
-            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo334', 'windows-vs-willowreleased')]",
+            "artifactId": "[resourceId('Microsoft.DevTestLab/labs/artifactSources/artifacts', parameters('labName'), 'privaterepo160', 'windows-vs-willowreleased')]",
             "parameters": [
               {
                 "name": "WorkLoads",
