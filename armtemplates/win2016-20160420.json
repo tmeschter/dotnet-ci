@@ -49,14 +49,8 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "labVirtualNetworkId": "[variables('labVirtualNetworkId')]",
-        "notes": "Windows Server 2016 Datacenter",
-        "galleryImageReference": {
-          "offer": "WindowsServer",
-          "publisher": "MicrosoftWindowsServer",
-          "sku": "2016-Datacenter",
-          "osType": "Windows",
-          "version": "latest"
-        },
+        "notes": "windows-server-2016-datacenter",
+        "customImageId": "/subscriptions/6fd2cc40-ad0c-4f8f-a1c4-9ab4e656c849/resourcegroups/dditimagefactoryrg886736/providers/microsoft.devtestlab/labs/dditimagefactory/customimages/windows-server-2016-datacenter",
         "size": "[parameters('size')]",
         "userName": "[parameters('userName')]",
         "password": "[parameters('password')]",
